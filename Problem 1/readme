@@ -1,0 +1,61 @@
+
+Command to run the setup on docker refer Pulltheimagesfromdocker.png
+docker pull yagnikpokal/accuknox:1.0
+docker run -p 8080:8080 yagnikpokal/accuknox:latest
+
+Signup Refer signup.png
+curl --location 'http://localhost:8080/signup' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"name": "yagnik",
+"email": "yagnikpokal@gmail.com",
+"Password": "123"
+}'
+
+Login Refer login.png
+curl --location 'http://localhost:8080/login' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"email": "yagnikpokal@gmail.com",
+"Password": "123"
+}'
+
+CreateNote Refer createnote.png
+curl --location 'http://localhost:8080/notes' \
+--header 'Content-Type: application/json' \
+--data '{
+"sid": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU4MDkzMjYsInN1YiI6IjEifQ.dd6G2HovD1FfdGdifZK8wiy_vpjfbbGd9bkj93mRzXY",
+"note": "3"
+}'
+
+Get note refer getnote.png
+curl --location --request GET 'http://localhost:8080/notes' \
+--header 'Content-Type: application/json' \
+--data '{
+"sid": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU4MDkzMjYsInN1YiI6IjEifQ.dd6G2HovD1FfdGdifZK8wiy_vpjfbbGd9bkj93mRzXY"
+
+}'
+
+DeletNote refer deletenote.png
+curl --location --request DELETE 'http://localhost:8080/notes' \
+--header 'Content-Type: application/json' \
+--header 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU3NTg4MzcsInN1YiI6IjEifQ.neKi1mIOpodCWi5ZPPZSa5G8rXujWovUZ1FSBExVD_k' \
+--data '{
+"sid": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE2OTU4MDkzMjYsInN1YiI6IjEifQ.dd6G2HovD1FfdGdifZK8wiy_vpjfbbGd9bkj93mRzXY",
+"id": 1
+}'
+
+
+
+
+To run the code in local
+go run main.go
+
+To build using docker
+docker build -t yagnikpokal/accuknox .
+
+To tag
+docker tag yagnikpokal/accuknox:latest yagnikpokal/accuknox:1.0
+
+To push
+docker push yagnikpokal/accuknox:1.0

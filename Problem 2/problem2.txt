@@ -1,0 +1,36 @@
+what the code is attempting to do?
+- Concurrent execution of functions using goroutines and channels. 
+- When the main function sends the function literal to the cnp channel, it can be picked up by any of the four goroutines and executed concurrently. 
+- This allows for parallel processing of tasks, which can be useful in scenarios where you want to perform multiple tasks concurrently, such as handling incoming requests in a web server, processing data in parallel, or running independent tasks concurrently to improve performance.
+
+package main
+
+import "fmt"
+
+func main() {
+    // Create a buffered channel with a capacity of 10
+    cnp := make(chan func(), 10)
+
+    // Start four goroutines 
+    for i := 0; i < 4; i++ {
+        go func() {
+            // Continuously read and execute functions from the channel
+            for f := range cnp {
+                f()
+            }
+        }()
+    }
+
+    // Send a function to the channel
+    cnp <- func() {
+        fmt.Println("HERE1")
+    }
+
+    // Print "Hello" to the standard output
+    fmt.Println("Hello")
+}
+
+Giving use-cases of what this construct/pattern could be used for?
+- We can use the parrallel task pattern for webservers like processing data in paralle, execution of tasks execute
+- Can use pipeline processing with channel.
+
